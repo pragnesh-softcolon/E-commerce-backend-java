@@ -1,5 +1,6 @@
 package com.example.ecommerce.ecommerce.controller;
 
+import com.example.ecommerce.ecommerce.model.UserModel;
 import com.example.ecommerce.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,6 @@ public class UserController {
         try {
             if (!payload.containsKey("username") || !payload.containsKey("password")
                     || !payload.containsKey("address") || !payload.containsKey("phone")) {
-                Map<String, Object> map = new HashMap<>();
                 throw new Exception("Required fields are missing");
             }
             if (payload.get("username").toString().isEmpty() || payload.get("password").toString().isEmpty()
@@ -41,8 +41,8 @@ public class UserController {
             return new ResponseEntity<>(userService.registerUser(payload), HttpStatus.OK);
         } catch (Exception e) {
             Map<String, Object> map = new HashMap<>();
-            map.put("Status", 400);
-            map.put("Message", e.toString());
+            map.put("status", 400);
+            map.put("message", e.toString());
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
@@ -59,8 +59,8 @@ public class UserController {
             }
             return new ResponseEntity<>(userService.login(payload), HttpStatus.OK);
         }catch (Exception e){
-            map.put("Status", 400);
-            map.put("Message", e.toString());
+            map.put("status", 400);
+            map.put("message", e.toString());
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
